@@ -1,54 +1,37 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import type { NextAuthConfig } from "next-auth";
+// Your own logic for dealing with plaintext password strings; be careful!
+// import { saltAndHashPassword } from "@/utils/password";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
-export const config = {
-  theme: {
-    logo: "https://next-auth.js.org/img/logo/logo-sm.png",
-  },
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  // adapter:PrismaAdapter
   providers: [
     Credentials({
-      // Anda dapat menambahkan form kustom atau menggunakan
-      // halaman login bawaan
-      // dengan memberikan `authorize` function ini.
-      async authorize(credentials) {
-        // Logika untuk memvalidasi kredensial pengguna
-        // Di sini, kita hanya melakukan validasi sederhana.
-        // Di aplikasi nyata, Anda akan memeriksa kredensial ini
-        // dengan database Anda.
-        if (
-          credentials.email === "user@example.com" &&
-          credentials.password === "password"
-        ) {
-          // Jika valid, kembalikan objek user
-          return { id: "1", name: "Ayahtamvan", email: "user@example.com" };
+      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+      // e.g. domain, username, password, 2FA token, etc.
+      credentials: {
+        email: {},
+        password: {},
+      },
+      authorize: async (credentials) => {
+        let user = null;
+
+        // logic to salt and hash password
+        // const pwHash = saltAndHashPassword(credentials.password);
+
+        // logic to verify if the user exists
+        // user = await getUserFromDb(credentials.email, pwHash);
+
+        if (!user) {
+          // No user found, so this is their first attempt to login
+          // Optionally, this is also the place you could do a user registration
+          throw new Error("Invalid credentials.");
         }
-        // Jika tidak valid, kembalikan null
-        return null;
+
+        // return user object with their profile data
+        return user;
       },
     }),
   ],
-  callbacks: {
-    // Callback ini digunakan untuk mengontrol apa yang terjadi
-    // saat tindakan terkait autentikasi dilakukan.
-    authorized({ request, auth }) {
-      const { pathname } = request.nextUrl;
-      // Jika pengguna berada di halaman yang memerlukan
-      // autentikasi,
-      // periksa apakah mereka sudah login.
-      if (pathname.startsWith("/admin")) {
-        // Contoh: melindungi
-        // rute /admin
-        return !!auth; // Mengembalikan true jika `auth` ada (user
-        // login), false jika tidak
-      }
-      return true; // Izinkan akses untuk rute lain
-    },
-  },
-  // Menentukan halaman login kustom
-  pages: {
-    signIn: "/login",
-  },
-} satisfies NextAuthConfig;
-
-export const { handlers, auth, signIn, signOut } = NextAuth(config);
+});
