@@ -1,54 +1,77 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import type { NextAuthConfig } from "next-auth";
+// Your own logic for dealing with plaintext password strings; be careful!
+// import { saltAndHashPassword } from "@/utils/password";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+// import prisma from "@/app/lib/prisma";
+// import prisma from "@/app/lib/prisma";
+import bcrypt from "bcryptjs";
+import prisma from "./src/app/lib/prisma";
 
-export const config = {
-  theme: {
-    logo: "https://next-auth.js.org/img/logo/logo-sm.png",
-  },
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  // export const authOptions = NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
     Credentials({
-      // Anda dapat menambahkan form kustom atau menggunakan
-      // halaman login bawaan
-      // dengan memberikan `authorize` function ini.
-      async authorize(credentials) {
-        // Logika untuk memvalidasi kredensial pengguna
-        // Di sini, kita hanya melakukan validasi sederhana.
-        // Di aplikasi nyata, Anda akan memeriksa kredensial ini
-        // dengan database Anda.
-        if (
-          credentials.email === "user@example.com" &&
-          credentials.password === "password"
-        ) {
-          // Jika valid, kembalikan objek user
-          return { id: "1", name: "Ayahtamvan", email: "user@example.com" };
+      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+      // e.g. domain, username, password, 2FA token, etc.
+      credentials: {
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "youremail@gmail.com",
+        },
+        password: {
+          label: "Password",
+          type: "password ",
+          placeholder: "******",
+        },
+      },
+      authorize: async (credentials) => {
+        // let user = null;
+        if (!credentials?.email || !credentials?.password) {
+          return null;
         }
-        // Jika tidak valid, kembalikan null
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email as string },
+        });
+
+        // logic to salt and hash password
+        // const pwHash = saltAndHashPassword(credentials.password);
+
+        // logic to verify if the user exists
+        // user = await getUserFromDb(credentials.email, pwHash);
+
+        if (!user || !user.password) {
+          // No user found, so this is their first attempt to login
+          // Optionally, this is also the place you could do a user registration
+          // throw new Error("Invalid credentials.");
+          return null;
+        }
+
+        const isPasswordValid = await bcrypt.compare(
+          credentials.password as string,
+          user.password,
+        );
+        if (!user.email || !user.password) {
+          return null;
+        }
+        if (isPasswordValid) {
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+          };
+        }
         return null;
       },
     }),
   ],
-  callbacks: {
-    // Callback ini digunakan untuk mengontrol apa yang terjadi
-    // saat tindakan terkait autentikasi dilakukan.
-    authorized({ request, auth }) {
-      const { pathname } = request.nextUrl;
-      // Jika pengguna berada di halaman yang memerlukan
-      // autentikasi,
-      // periksa apakah mereka sudah login.
-      if (pathname.startsWith("/admin")) {
-        // Contoh: melindungi
-        // rute /admin
-        return !!auth; // Mengembalikan true jika `auth` ada (user
-        // login), false jika tidak
-      }
-      return true; // Izinkan akses untuk rute lain
-    },
+  session: {
+    strategy: "jwt",
   },
-  // Menentukan halaman login kustom
+  secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/login",
   },
-} satisfies NextAuthConfig;
-
-export const { handlers, auth, signIn, signOut } = NextAuth(config);
+});

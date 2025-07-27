@@ -63,3 +63,26 @@ model VerificationToken{
     @@unique([identifier,token])
   }
 
+
+
+
+
+model Author {
+  @@map("authors")
+
+  id        Int      @id @default(autoincrement())
+  name      String
+  bio       String?
+  createdAt DateTime @default(now()) @map("created_at")
+  books     Book[]
+}
+
+model Book {
+  @@map("books")
+
+  id        Int      @id @default(autoincrement())
+  title     String
+  authorId  Int      @map("author_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  author    Author   @relation(fields: [authorId], references: [id])
+}

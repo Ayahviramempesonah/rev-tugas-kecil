@@ -14,10 +14,11 @@ pnpm dev
 bun dev
 ```
 
-## TREE project
+## TREE PROJECT
 
 ```
- .
+
+.
 ├── auth.ts
 ├── GEMINI.md
 ├── middleware.ts
@@ -30,6 +31,8 @@ bun dev
 │   ├── migrations
 │   │   ├── 20250725192307_init
 │   │   │   └── migration.sql
+│   │   ├── 20250727045132_init
+│   │   │   └── migration.sql
 │   │   └── migration_lock.toml
 │   └── schema.prisma
 ├── public
@@ -41,20 +44,30 @@ bun dev
 ├── README.md
 ├── src
 │   ├── app
+│   │   ├── actions.ts
 │   │   ├── api
 │   │   │   └── auth
 │   │   │       └── [...nextauth]
 │   │   │           └── route.ts
 │   │   ├── components
-│   │   │   └── sign-in.tsx
+│   │   │   ├── AuthProvider.tsx
+│   │   │   ├── Navbar.tsx
+│   │   │   ├── sign-in.tsx
+│   │   │   └── sign-out.tsx
+│   │   ├── dashboard
+│   │   │   └── page.tsx
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   ├── lib
+│   │   │   ├── prisma.ts
+│   │   │   ├── seed.js
 │   │   │   └── zod.ts
 │   │   ├── login
 │   │   │   └── page.tsx
-│   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   └── register
+│   │       └── page.tsx
 │   └── generated
 │       └── prisma
 │           ├── client.d.ts
@@ -82,5 +95,6 @@ bun dev
 │           ├── wasm.d.ts
 │           └── wasm.js
 └── tsconfig.json
-
 ```
+
+# poject ini akan dilakukan dokumentasi untuk pengembangan project selanjutnya
