@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+// import NextAuth from "next-auth";
 import { auth } from "../../../auth";
 import SignOutButton from "../components/sign-out";
 import { redirect } from "next/navigation";
