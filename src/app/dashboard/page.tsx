@@ -43,10 +43,6 @@ export default async function DashboardPage() {
   return (
     <main className="bg-slate-400 text-center">
       <div>
-        <h1>ini adalah area rahasia</h1>
-        <h1>hallo ganteng</h1>
-      </div>
-      <div>
         <h2>welcome {session?.user?.name}</h2>
         <h2>email anda {session?.user?.email}</h2>
       </div>

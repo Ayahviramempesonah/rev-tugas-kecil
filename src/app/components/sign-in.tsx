@@ -28,7 +28,7 @@ export default function SignInForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-slate-600 flex-col gap-4 rounded-lg shadow:md mx-auto  "
+      className="bg-slate-600 flex-col gap-4 rounded-lg shadow:md mx-auto m-2 p-8  "
     >
       {error && <p className="text-red-600 text-center">{error}</p>}
       <div>
@@ -73,24 +73,3 @@ export default function SignInForm() {
     </form>
   );
 }
-
-// export function SignIn() {
-//   return (
-//     <form
-//       action={async (formData) => {
-//         "use server";
-//         await signIn("credentials", formData);
-//       }}
-//     >
-//       <label>
-//         Email
-//         <input name="email" type="email" />
-//       </label>
-//       <label>
-//         Password
-//         <input name="password" type="password" />
-//       </label>
-//       <button>Sign In</button>
-//     </form>
-//   );
-// }

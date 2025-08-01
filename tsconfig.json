@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/lib/seed.js"
+    "src/app/lib/seed.js",
+    "src/app/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
