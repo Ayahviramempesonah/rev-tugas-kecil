@@ -55,6 +55,7 @@ export async function createStoryAction(formData: FormData) {
   // buat instansi blob untuk disimpan di vecel blob
   const blob = await put(imageFile.name, imageFile, {
     access: "public",
+    addRandomSuffix: true,
   });
 
   await prisma.story.create({

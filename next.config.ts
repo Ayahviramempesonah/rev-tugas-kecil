@@ -7,14 +7,32 @@ const nextConfig: NextConfig = {
   //     new URL("https://qysqqwp098bn3wgo.public.blob.vercel-storage.com"),
   //   ],
   // },
-};
 
-module.exports = {
   images: {
     remotePatterns: [
       new URL("https://qysqqwp098bn3wgo.public.blob.vercel-storage.com/**"),
     ],
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["localhost:3000", "storyapp-gamma.vercel.app"],
+    },
+  },
+  // experimental: {
+  //   bodySizeLimit: "5mb",
+  // },
 };
 
-export default nextConfig;
+// module.exports = {
+//   images: {
+//     remotePatterns: [
+//       new URL("https://qysqqwp098bn3wgo.public.blob.vercel-storage.com/**"),
+//     ],
+//   },
+//   experimental: {
+//     bodySizeLimit: "5mb",
+//   },
+// };
+
+// export default nextConfig;
+module.exports = nextConfig;
