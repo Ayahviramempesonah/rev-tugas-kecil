@@ -100,3 +100,5 @@ bun dev
 # poject ini akan dilakukan dokumentasi untuk pengembangan project selanjutnya
 
 - karna dikejar deadline saya tidak sempat untuk membuat fitur add commentar, karna banyak error, untuk implementasinya ,meskipun bisa dikerjakan tapi waktu sangat mepet, saya mohon maaf , tapi 2 fitur crud terpenuhi
+
+- untuk reviewer jika test CRUD terkadang tidak bisa langsung success karna database jika tidak sedang digunakan akan dalam keadaan tertidur setelah mendeteksi adanya permintaan baru dia akan tertiger dan bangun untuk menjalankan fungsi kembali
