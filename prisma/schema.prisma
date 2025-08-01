@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -52,6 +53,7 @@ password String?
 image String?
 accounts Account[]
 session Session[]
+stories Story[]
 
 
   }
@@ -86,3 +88,14 @@ model Book {
   createdAt DateTime @default(now()) @map("created_at")
   author    Author   @relation(fields: [authorId], references: [id])
 }
+
+model Story{
+    id String @id @default(cuid())
+    title String
+    description String @db.Text
+    imageUrl String 
+    createdAt DateTime @default(now())
+
+    authorId String
+    author User @relation(fields:[authorId],references:[id],onDelete:Cascade)
+  }
