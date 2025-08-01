@@ -28,7 +28,7 @@ function EditForm({
   // };
   return (
     <form
-      action={updateStoryAction.bind(null,story.id)}
+      action={updateStoryAction.bind(null, story.id)}
       onSubmit={onCancel}
       className="space-y-2 mt-4"
     >
@@ -84,12 +84,15 @@ export default function StoryCard({ story }: StoryProps) {
             <div className="flex gap-2 mt-4">
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-yellow-500 rounded "
+                className="bg-yellow-500 rounded text-white py-1 px-3 text-sm  m-1 "
               >
                 edit
               </button>
               <form action={deleteStoryAction.bind(null, story.id)}>
-                <button type="submit" className="bg-red-500 rounded ">
+                <button
+                  type="submit"
+                  className="bg-red-500 rounded text-white py-1 px-3 text-sm  m-1"
+                >
                   hapus
                 </button>
               </form>

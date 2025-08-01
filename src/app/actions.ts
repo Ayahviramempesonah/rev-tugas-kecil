@@ -83,10 +83,10 @@ export async function deleteStoryAction(storyId: string) {
   });
 
   if (!story || story.authorId !== session.user.id) {
-    // throw new Error(
-    //   "cerita tidak ditemukan atau anda tidak berhak menghapusnya",
-    // );
-    alert("anda tidak punya hak akses untuk menghapus story user lain");
+    throw new Error(
+      "cerita tidak ditemukan atau anda tidak berhak menghapusnya",
+    );
+    // alert("anda tidak punya hak akses untuk menghapus story user lain");
   }
 
   await del(story.imageUrl);
@@ -98,6 +98,7 @@ export async function deleteStoryAction(storyId: string) {
     },
   });
   revalidatePath("/dashboard");
+  // return { succes: "cerita berhasil dihapus" };
 }
 
 // action untuk update story
