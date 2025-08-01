@@ -17,6 +17,27 @@ export default async function DashboardPage() {
     orderBy: {
       createdAt: "desc",
     },
+    include: {
+      comments: {
+        include: {
+          author: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+      author: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
   });
 
   return (
@@ -37,7 +58,13 @@ export default async function DashboardPage() {
         {stories.length === 0 ? (
           <p>jadilah yang pertama membuat cerita</p>
         ) : (
-          stories.map((story) => <StoryCard key={story.id} story={story} />)
+          stories.map((story) => (
+            <StoryCard
+              key={story.id}
+              story={story}
+              currentUserId="session.user.id "
+            />
+          ))
         )}
       </div>
     </main>

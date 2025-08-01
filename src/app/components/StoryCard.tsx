@@ -5,13 +5,26 @@ import Image from "next/image";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { deleteStoryAction, updateStoryAction } from "../actions";
+import CommentSection from "./CommentSection";
+import { useSession } from "next-auth/react";
 type StoryProps = {
   story: {
     id: string;
     title: string;
     description: string;
     imageUrl: string;
+    authorId: string;
+    comments: {
+      id: string;
+      text: string;
+      createdAt: Date;
+      author: {
+        id: string;
+        name: string | null;
+      };
+    }[];
   };
+  currentUserId: string;
 };
 
 function EditForm({
@@ -66,6 +79,8 @@ function EditForm({
 
 export default function StoryCard({ story }: StoryProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const { data: session } = useSession();
+  const currentUserId = session?.user?.id;
 
   return (
     <div className="border rounded-lg">
@@ -81,6 +96,16 @@ export default function StoryCard({ story }: StoryProps) {
           <>
             <h3 className="text-lg font-bold">{story.title}</h3>
             <p className="mt-1">{story.description}</p>
+            {story.authorId === currentUserId && (
+              <div className="flex gap-2 mt-4">
+                {/* <button */}
+                {/*   onClick={() => setIsEditing(true)} */}
+                {/*   className="bg-yellow-500 text-white py-1 px-3 rounded text-sm " */}
+                {/* > */}
+                {/*   edit */}
+                {/* </button> */}
+              </div>
+            )}
             <div className="flex gap-2 mt-4">
               <button
                 onClick={() => setIsEditing(true)}

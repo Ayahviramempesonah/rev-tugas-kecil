@@ -54,7 +54,7 @@ image String?
 accounts Account[]
 session Session[]
 stories Story[]
-
+comments Comment[]
 
   }
 
@@ -98,4 +98,29 @@ model Story{
 
     authorId String
     author User @relation(fields:[authorId],references:[id],onDelete:Cascade)
+  comments Comment[]
+
   }
+
+
+model Comment{
+
+  id String @id @default(cuid())
+  text String @db.Text
+  createdAt DateTime @default(now())
+
+  authorId String
+  author User @relation(fields:[authorId],references:[id],onDelete:Cascade)
+
+StoryId String
+story Story @relation(fields:[StoryId],references:[id],onDelete:Cascade)
+
+  }
+model Catatan{
+    id String @id @default(cuid())
+    title String @db.Text
+    description String @db.Text
+    createdAt DateTime @default(now())
+  }
+
+
