@@ -83,9 +83,10 @@ export async function deleteStoryAction(storyId: string) {
   });
 
   if (!story || story.authorId !== session.user.id) {
-    throw new Error(
-      "cerita tidak ditemukan atau anda tidak berhak menghapusnya",
-    );
+    // throw new Error(
+    //   "cerita tidak ditemukan atau anda tidak berhak menghapusnya",
+    // );
+    alert("anda tidak punya hak akses untuk menghapus story user lain");
   }
 
   await del(story.imageUrl);
