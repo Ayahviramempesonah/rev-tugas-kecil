@@ -17,9 +17,11 @@ interface PageProps {
 export default async function StoryIdPage({ params }: PageProps) {
   const session = await auth();
   // if (!session) return null;
+  const { storyId } = await params;
+
   const currentUserId = session?.user?.id;
 
-  const { storyId } = await params;
+  // const { storyId } = await params;
 
   const story = await prisma.story.findUnique({
     where: {
