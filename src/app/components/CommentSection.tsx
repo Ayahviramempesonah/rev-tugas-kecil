@@ -2,7 +2,12 @@
 
 import { useFormStatus } from "react-dom";
 import { useRef } from "react";
-import { createCommentAction, deleteCommentAction } from "../actions";
+import {
+  createCommentAction,
+  deleteCommentAction,
+  updateCommentAction,
+} from "../actions";
+import { auth } from "../../../auth";
 
 type Comment = {
   id: string;
@@ -17,7 +22,7 @@ type Comment = {
 type CommentSectionProps = {
   storyId: string;
   Comments: Comment[];
-  currentUserId: string;
+  currentUserId: string | undefined;
 };
 
 function SubmitButton() {
@@ -38,20 +43,45 @@ export default function CommentSection({
   Comments,
   currentUserId,
 }: CommentSectionProps) {
+  // const session = auth();
+  // if (!session) return null;
   const formRef = useRef<HTMLFormElement>(null);
 
   const createCommentWithStoryId = createCommentAction.bind(null, storyId);
 
-  const handleActin = async (formdata: FormData) => {
+  const handleActionn = async (formdata: FormData) => {
     await createCommentWithStoryId(formdata);
     formRef.current?.reset();
   };
+
+  // handler function edit comment
+  const handleedit = async (comment: Comment) => {
+    const newText = prompt("edit komentar anda", comment.text);
+
+    if (newText === null || !newText.trim()) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("content", newText.trim());
+
+    await updateCommentAction(comment.id, storyId, formData);
+  };
+
+  // const formData = new FormData();
+  // formData.append("content", newText.trim());
+  //
+  // await updateCommentAction(commentId, storyId, formData);
+  //
   return (
     <div className="mt-4 pt-4 border-t">
       <h4 className="font-semibold text-sm mb-2 ">
         komentar ({Comments.length})
       </h4>
-      <form>
+      <form
+        ref={formRef}
+        action={handleActionn}
+        className="flex items-center mb-6"
+      >
         <input
           required
           type="text"
@@ -75,17 +105,21 @@ export default function CommentSection({
               <p className="inline ml-2 text-gray-700 ">{comment.text}</p>
             </div>
             {comment.author.id === currentUserId && (
-              <form action={deleteCommentAction.bind(null, comment.id)}>
+              <div className="flex gap-2 px-4">
                 <button
-                  type="submit"
-                  className="text-red-500 hover:text-red-700 text-xs "
+                  onClick={() => handleedit(comment)}
+                  className="text-yellow-500 hover:text-yellow-400 text-xs font-semibold"
+                >
+                  edit
+                </button>
+                <button
+                  className="text-red-500 hover:text-red-400"
+                  onClick={() => deleteCommentAction(comment.id, storyId)}
                 >
                   hapus
                 </button>
-              </form>
+              </div>
             )}
-            {/* <span className="font-bold">{comment.author.name || "User"}</span> */}
-            {/* <p className="inline ml-2 text-gray-700 ">{comment.text}</p> */}
           </div>
         ))}
       </div>

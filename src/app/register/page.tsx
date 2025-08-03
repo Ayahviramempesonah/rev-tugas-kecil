@@ -6,7 +6,7 @@ export default function RegisterPage() {
   return (
     <main className="bg-slate-600 text-center text-white flex flex-col gap-4 p-8">
       <div>
-        <h1>Register </h1>
+        {/* <h1>Register </h1> */}
         <form
           action={registerUserAction}
           className="flex flex-col gap-4 p-8 rounde-lg mx-auto w-full max-w-sm "

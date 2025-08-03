@@ -7,6 +7,7 @@ import { useFormStatus } from "react-dom";
 import { deleteStoryAction, updateStoryAction } from "../actions";
 import CommentSection from "./CommentSection";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 type StoryProps = {
   story: {
     id: string;
@@ -84,39 +85,37 @@ export default function StoryCard({ story }: StoryProps) {
 
   return (
     <div className="border rounded-lg">
-      <Image
-        src={story.imageUrl}
-        alt={story.title}
-        width={500}
-        height={300}
-        className="rounded w-full"
-      />
-      <div className="mt-4">
+      <Link href={`/story/${story.id}`}>
+        <Image
+          src={story.imageUrl}
+          alt={story.title}
+          width={500}
+          height={300}
+          className="rounded w-full"
+        />
+      </Link>
+      <div className="mt-4 gap-2 p-2">
         {!isEditing ? (
           <>
             <h3 className="text-lg font-bold">{story.title}</h3>
             <p className="mt-1">{story.description}</p>
             {story.authorId === currentUserId && (
-              <div className="flex gap-2 mt-4">
-                {/* <button */}
-                {/*   onClick={() => setIsEditing(true)} */}
-                {/*   className="bg-yellow-500 text-white py-1 px-3 rounded text-sm " */}
-                {/* > */}
-                {/*   edit */}
-                {/* </button> */}
-              </div>
+              <div className="flex gap-2 mt-4"></div>
             )}
-            <div className="flex gap-2 mt-4">
+            <div className="flex gap-4  p-2">
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-yellow-500 rounded text-white py-1 px-3 text-sm  m-1 "
+                className="bg-yellow-500 rounded text-white py-2 px-4 text-sm  m-1 "
               >
                 edit
               </button>
-              <form action={deleteStoryAction.bind(null, story.id)}>
+              <form
+                action={deleteStoryAction.bind(null, story.id)}
+                className=" px-4"
+              >
                 <button
                   type="submit"
-                  className="bg-red-500 rounded text-white py-1 px-3 text-sm  m-1"
+                  className="bg-red-500 rounded text-white py-2 px-4 text-sm  m-1"
                 >
                   hapus
                 </button>

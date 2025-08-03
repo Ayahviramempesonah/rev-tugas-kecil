@@ -46,7 +46,7 @@ export default async function DashboardPage() {
         <h2>welcome {session?.user?.name}</h2>
         <h2>email anda {session?.user?.email}</h2>
       </div>
-      {/* <SignOutButton /> */}
+      <SignOutButton />
       <CreateStoryForm />
       <hr />
       <h2>Cerita Anda</h2>

@@ -28,7 +28,9 @@ export default function SignInForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-slate-600 flex-col gap-4 rounded-lg shadow:md mx-auto m-2 p-8  "
+      // className="bg-slate-600 flex-col gap-4 rounded-lg shadow:md mx-auto m-2 p-8  "
+
+      className="flex flex-col gap-4 p-8 rounde-lg mx-auto w-full max-w-sm "
     >
       {error && <p className="text-red-600 text-center">{error}</p>}
       <div>

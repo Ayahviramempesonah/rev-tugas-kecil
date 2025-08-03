@@ -6,7 +6,7 @@
 .pnp.*
 .yarn/*
 !.yarn/patches
-!.yarn/plugins
+!.yarn/plugins  
 !.yarn/releases
 !.yarn/versions
 
@@ -19,6 +19,8 @@
 
 # production
 /build
+GEMINI.md
+
 
 # misc
 .DS_Store

@@ -223,10 +223,10 @@ export async function createCommentAction(storyId: string, formData: FormData) {
     },
   });
 
-  revalidatePath("/dashboard");
+  revalidatePath(`/story/${storyId}`);
 }
 
-export async function deleteCommentAction(commentId: string) {
+export async function deleteCommentAction(commentId: string, storyId: string) {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -251,5 +251,44 @@ export async function deleteCommentAction(commentId: string) {
       id: commentId,
     },
   });
-  revalidatePath("/dashboard");
+  // revalidatePath(`/story/${storyId}`);
+
+  revalidatePath(`/story/${storyId}`);
+}
+
+//server action untuk update komentar
+export async function updateCommentAction(
+  commentId: string,
+  storyId: string,
+  formData: FormData,
+) {
+  const session = await auth();
+  if (!session) {
+    throw new Error("anda harus login untuk update komentar");
+  }
+  const content = formData.get("content") as string;
+
+  if (!content || !content.trim()) {
+    throw new Error("komentar tidak boleh kosong");
+  }
+
+  const comment = await prisma.comment.findUnique({
+    where: {
+      id: commentId,
+    },
+  });
+
+  if (!comment || comment.authorId !== session?.user?.id) {
+    throw new Error("aksi tidak di izinkan");
+  }
+
+  await prisma.comment.update({
+    where: {
+      id: commentId,
+    },
+    data: {
+      text: content.trim(),
+    },
+  });
+  revalidatePath(`/story/${storyId}`);
 }
