@@ -2,18 +2,14 @@ import { auth } from "../../../../auth";
 import { notFound } from "next/navigation";
 import prisma from "@/app/lib/prisma";
 import CommentSection from "@/app/components/CommentSection";
-import { cuid } from "zod";
-type PageProps = {
+// import { cuid } from "zod";
+interface PageProps {
   params: {
     storyId: string;
   };
-};
+}
 
-export default async function StoryIdPage({
-  params,
-}: {
-  params: { storyId: string };
-}) {
+export default async function StoryIdPage({ params }: PageProps) {
   const session = await auth();
   // if (!session) return null;
   const currentUserId = session?.user?.id;
