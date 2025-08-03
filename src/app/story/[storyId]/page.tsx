@@ -3,10 +3,15 @@ import { notFound } from "next/navigation";
 import prisma from "@/app/lib/prisma";
 import CommentSection from "@/app/components/CommentSection";
 // import { cuid } from "zod";
+// interface PageProps {
+//   params: Promise<{
+//     storyId: string;
+//   }>;
+// }
 interface PageProps {
-  params: {
+  params: Promise<{
     storyId: string;
-  };
+  }>;
 }
 
 export default async function StoryIdPage({ params }: PageProps) {
@@ -14,9 +19,11 @@ export default async function StoryIdPage({ params }: PageProps) {
   // if (!session) return null;
   const currentUserId = session?.user?.id;
 
+  const { storyId } = await params;
+
   const story = await prisma.story.findUnique({
     where: {
-      id: params.storyId,
+      id: storyId,
     },
     include: {
       author: true,
