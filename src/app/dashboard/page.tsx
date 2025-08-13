@@ -42,11 +42,11 @@ export default async function DashboardPage() {
 
   return (
     <main className="bg-slate-400 text-center">
-      <div>
-        <h2>welcome {session?.user?.name}</h2>
-        <h2>email anda {session?.user?.email}</h2>
+      <div className="p-14">
+        <h2>welcome : {session?.user?.name}</h2>
+        <h2>email anda : {session?.user?.email}</h2>
       </div>
-      <SignOutButton />
+      {/* <SignOutButton /> */}
       <CreateStoryForm />
       <hr />
       <h2>Cerita Anda</h2>

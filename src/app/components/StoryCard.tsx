@@ -111,7 +111,7 @@ export default function StoryCard({ story }: StoryProps) {
               </button>
               <form
                 action={deleteStoryAction.bind(null, story.id)}
-                className=" px-4"
+                className="py-2 px-4"
               >
                 <button
                   type="submit"
