@@ -50,7 +50,7 @@ export default async function DashboardPage() {
       <CreateStoryForm />
       <hr />
       <h2>Cerita Anda</h2>
-      <div className="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3 m-1">
+      <div className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 m-1">
         {stories.length === 0 ? (
           <p>jadilah yang pertama membuat cerita</p>
         ) : (

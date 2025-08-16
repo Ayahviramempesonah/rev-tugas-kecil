@@ -17,6 +17,11 @@ bun dev
 ## TREE PROJECT
 
 ```
+#command for create tree structure project #and ignore node_modules and prisma folder
+tree -I "node_modules|prisma"
+```
+
+```
 
 .
 ├── auth.ts
@@ -27,14 +32,6 @@ bun dev
 ├── package.json
 ├── package-lock.json
 ├── postcss.config.mjs
-├── prisma
-│   ├── migrations
-│   │   ├── 20250725192307_init
-│   │   │   └── migration.sql
-│   │   ├── 20250727045132_init
-│   │   │   └── migration.sql
-│   │   └── migration_lock.toml
-│   └── schema.prisma
 ├── public
 │   ├── file.svg
 │   ├── globe.svg
@@ -49,11 +46,20 @@ bun dev
 │   │   │   └── auth
 │   │   │       └── [...nextauth]
 │   │   │           └── route.ts
+│   │   ├── catatan
+│   │   │   └── page.tsx
 │   │   ├── components
 │   │   │   ├── AuthProvider.tsx
+│   │   │   ├── camera-capture.tsx
+│   │   │   ├── CatatanItem.tsx
+│   │   │   ├── commentItem.tsx
+│   │   │   ├── CommentSection.tsx
+│   │   │   ├── CreateStoryForm.tsx
+│   │   │   ├── image-upload.tsx
 │   │   │   ├── Navbar.tsx
 │   │   │   ├── sign-in.tsx
-│   │   │   └── sign-out.tsx
+│   │   │   ├── sign-out.tsx
+│   │   │   └── StoryCard.tsx
 │   │   ├── dashboard
 │   │   │   └── page.tsx
 │   │   ├── favicon.ico
@@ -65,40 +71,17 @@ bun dev
 │   │   │   └── zod.ts
 │   │   ├── login
 │   │   │   └── page.tsx
-│   │   ├── page.tsx
-│   │   └── register
-│   │       └── page.tsx
+│   │   ├── page.jsx
+│   │   ├── register
+│   │   │   └── page.tsx
+│   │   └── story
+│   │       └── [storyId]
+│   │           └── page.tsx
 │   └── generated
-│       └── prisma
-│           ├── client.d.ts
-│           ├── client.js
-│           ├── default.d.ts
-│           ├── default.js
-│           ├── edge.d.ts
-│           ├── edge.js
-│           ├── index-browser.js
-│           ├── index.d.ts
-│           ├── index.js
-│           ├── libquery_engine-debian-openssl-1.1.x.so.node
-│           ├── package.json
-│           ├── runtime
-│           │   ├── edge-esm.js
-│           │   ├── edge.js
-│           │   ├── index-browser.d.ts
-│           │   ├── index-browser.js
-│           │   ├── library.d.ts
-│           │   ├── library.js
-│           │   ├── react-native.js
-│           │   ├── wasm-compiler-edge.js
-│           │   └── wasm-engine-edge.js
-│           ├── schema.prisma
-│           ├── wasm.d.ts
-│           └── wasm.js
 └── tsconfig.json
 ```
 
-# poject ini akan dilakukan dokumentasi untuk pengembangan project selanjutnya
-
-- karna dikejar deadline saya tidak sempat untuk membuat fitur add commentar, karna banyak error, untuk implementasinya ,meskipun bisa dikerjakan tapi waktu sangat mepet, saya mohon maaf , tapi 2 fitur crud terpenuhi
-
-- untuk reviewer jika test CRUD terkadang tidak bisa langsung success karna database jika tidak sedang digunakan akan dalam keadaan tertidur setelah mendeteksi adanya permintaan baru dia akan tertiger dan bangun untuk menjalankan fungsi kembali
+- this project created for submission jabar digital academy
+- you can upload file blob create story then save to vercel blob and save other form data to neon database serverless
+- commnet post other user click image you can redirect to storyId using dynamic route and add comment anything
+- happy enjoy.

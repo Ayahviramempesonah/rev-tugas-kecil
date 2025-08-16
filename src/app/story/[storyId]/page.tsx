@@ -1,5 +1,5 @@
 import { auth } from "../../../../auth";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import prisma from "@/app/lib/prisma";
 import CommentSection from "@/app/components/CommentSection";
 // import { cuid } from "zod";
@@ -16,7 +16,9 @@ interface PageProps {
 
 export default async function StoryIdPage({ params }: PageProps) {
   const session = await auth();
-  // if (!session) return null;
+  if (!session) {
+    redirect("/login");
+  }
   const { storyId } = await params;
 
   const currentUserId = session?.user?.id;
@@ -56,8 +58,8 @@ export default async function StoryIdPage({ params }: PageProps) {
         className="p-8 items-center"
       />
       <h1> Di Posting Oleh:{story.author.name}</h1>
-      <h1>{story.title}</h1>
-      <p>{story.description}</p>
+      <h1>Title: {story.title}</h1>
+      <p> Story: {story.description}</p>
       <hr className="border-gray-700 " />
 
       <CommentSection

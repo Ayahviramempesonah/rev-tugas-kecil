@@ -8,6 +8,7 @@ import { deleteStoryAction, updateStoryAction } from "../actions";
 import CommentSection from "./CommentSection";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+
 type StoryProps = {
   story: {
     id: string;
@@ -84,43 +85,42 @@ export default function StoryCard({ story }: StoryProps) {
   const currentUserId = session?.user?.id;
 
   return (
-    <div className="border rounded-lg">
-      <Link href={`/story/${story.id}`}>
-        <Image
-          src={story.imageUrl}
-          alt={story.title}
-          width={500}
-          height={300}
-          className="rounded w-full"
-        />
-      </Link>
-      <div className="mt-4 gap-2 p-2">
+    <div className="border rounded-lg overflow-hidden shadow-md flex flex-col h-full ">
+      <div className="relative w-full aspect-video">
+        <Link href={`/story/${story.id}`}>
+          <Image
+            src={story.imageUrl}
+            alt={story.title}
+            width={500}
+            height={300}
+            className="object-cover"
+          />
+        </Link>
+      </div>
+      <div className=" p-4 flex flex-col flex-grow">
         {!isEditing ? (
           <>
             <h3 className="text-lg font-bold">{story.title}</h3>
-            <p className="mt-1">{story.description}</p>
+            <p className="mt-1 text-gray-600">{story.description}</p>
             {story.authorId === currentUserId && (
-              <div className="flex gap-2 mt-4"></div>
-            )}
-            <div className="flex gap-4  p-2">
-              <button
-                onClick={() => setIsEditing(true)}
-                className="bg-yellow-500 rounded text-white py-2 px-4 text-sm  m-1 "
-              >
-                edit
-              </button>
-              <form
-                action={deleteStoryAction.bind(null, story.id)}
-                className="py-2 px-4"
-              >
+              <div className="flex gap-2 mt-auto pt-4 items-center">
+                {/* <div className="flex gap-4  p-2 items-center"> */}
                 <button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-yellow-500 rounded text-white py-2 px-4 text-sm  m-1 "
+                >
+                  edit
+                </button>
+                <button
+                  onClick={deleteStoryAction.bind(null, story.id)}
                   type="submit"
                   className="bg-red-500 rounded text-white py-2 px-4 text-sm  m-1"
                 >
                   hapus
                 </button>
-              </form>
-            </div>
+                {/* </div> */}
+              </div>
+            )}
           </>
         ) : (
           <EditForm story={story} onCancel={() => setIsEditing(false)} />

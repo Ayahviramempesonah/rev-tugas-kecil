@@ -1,3 +1,4 @@
+//component catatan crud
 import { createCatatan } from "../actions";
 import prisma from "../lib/prisma";
 import CatatanItem from "../components/CatatanItem";

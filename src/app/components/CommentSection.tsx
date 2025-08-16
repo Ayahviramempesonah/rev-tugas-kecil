@@ -1,3 +1,4 @@
+// component form Comment
 "use client";
 
 import { useFormStatus } from "react-dom";
@@ -100,7 +101,9 @@ export default function CommentSection({
             className="text-sm flex justify-between items-start"
           >
             <div>
-              <span className="font-bold">{comment.author.name || "User"}</span>
+              <span className="font-bold rounded border">
+                {comment.author.name || "User"}
+              </span>
 
               <p className="inline ml-2 text-gray-700 ">{comment.text}</p>
             </div>
